@@ -1,0 +1,60 @@
+﻿.display_book{
+         visibility: none;
+         border-style: solid;
+         border-width: 1px;
+         padding : 10px;
+    }
+
+.image_data{
+	width: 7%;
+	height: 70px;
+	padding: 5px;
+	border-style: solid;
+    border-width: 1px;
+	vertical-align: top;
+}	
+    
+.book_data{
+	width: 60%;
+	vertical-align: top;
+	border-style: solid;
+    border-width: 1px;
+}	
+.table_heading{
+   margin-left : 10px;
+   border: 1px solid black;
+   border-collapse: collapse;
+}
+.book_container{
+	width: 60%;
+	margin-left : 100px;
+	padding-top : 50px;
+}
+.book_image{
+	width: 15%;
+	float: left;
+	margin-right: 1em;
+}
+.book_title{
+	 font-size: 25px;
+     font-weight: bold;
+	 display: inline;
+}
+.book_description{
+    overflow: hidden;
+}
+.author_image{
+	width: 20%;
+	float: left;
+	margin-right: 1em;
+}
+.right_container{
+	border: 1px solid black;
+	width: 600px;
+	margin-left: 200px;
+}
+.right_container_book{
+	border: 1px solid black;
+	width: 80%;
+	margin-left: 120px;
+}

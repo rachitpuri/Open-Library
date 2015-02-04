@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>SampleServlet2</display-name>
+   <welcome-file-list>
+   <!-- <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file> -->
+    
+    <welcome-file>login.jsp</welcome-file>  
+  </welcome-file-list> 
+  
+  <servlet>
+  	<servlet-name>LoginServlet</servlet-name>
+  	<servlet-class>openlibrary_servlet.LoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>LoginServlet</servlet-name>
+  	<url-pattern>/LoginServlet</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+  	<servlet-name>UserServlet</servlet-name>
+  	<servlet-class>openlibrary_servlet.UserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>UserServlet</servlet-name>
+  	<url-pattern>/UserServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>BookSearchServlet</servlet-name>
+  	<servlet-class>openlibrary_servlet.BookSearchServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>BookSearchServlet</servlet-name>
+  	<url-pattern>/BookSearchServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>AuthorSearchServlet</servlet-name>
+  	<servlet-class>openlibrary_servlet.AuthorSearchServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AuthorSearchServlet</servlet-name>
+  	<url-pattern>/AuthorSearchServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>UserHomeServlet</servlet-name>
+  	<servlet-class>openlibrary_servlet.UserHomeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>UserHomeServlet</servlet-name>
+  	<url-pattern>/UserHomeServlet</url-pattern>
+  </servlet-mapping>
+    
+    <servlet>
+  	<servlet-name>UserCommentServlet</servlet-name>
+  	<servlet-class>openlibrary_servlet.UserCommentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>UserCommentServlet</servlet-name>
+  	<url-pattern>/UserCommentServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>IssueBookServlet</servlet-name>
+  	<servlet-class>openlibrary_servlet.IssueBookServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>IssueBookServlet</servlet-name>
+  	<url-pattern>/IssueBookServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>UserProfileServlet</servlet-name>
+  	<servlet-class>openlibrary_servlet.UserProfileServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>UserProfileServlet</servlet-name>
+  	<url-pattern>/UserProfileServlet</url-pattern>
+  </servlet-mapping>  
+    
+  <servlet>
+  	<servlet-name>ReturnBookServlet</servlet-name>
+  	<servlet-class>openlibrary_servlet.ReturnBookServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ReturnBookServlet</servlet-name>
+  	<url-pattern>/ReturnBookServlet</url-pattern>
+  </servlet-mapping>
+      
+  <servlet>
+  	<servlet-name>UserBillServlet</servlet-name>
+  	<servlet-class>openlibrary_servlet.UserBillServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>UserBillServlet</servlet-name>
+  	<url-pattern>/UserBillServlet</url-pattern>
+  </servlet-mapping>
+        
+  <servlet>
+  	<servlet-name>ReserveBookServlet</servlet-name>
+  	<servlet-class>openlibrary_servlet.ReserveBookServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ReserveBookServlet</servlet-name>
+  	<url-pattern>/ReserveBookServlet</url-pattern>
+  </servlet-mapping>
+</web-app>

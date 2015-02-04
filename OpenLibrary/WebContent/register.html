@@ -1,0 +1,79 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Welcome to OpenShift</title>
+  <link href="../css/bootstrap.css" type="text/css" rel="stylesheet" />
+  <link href="../css/registrationPage.css" type="text/css" rel="stylesheet"/>
+    <script src="../js/jquery-1.11.1.js"></script>
+    <script src="../js/registrationPage.js"></script>
+
+
+
+</head>
+<body>
+    <div class="container mainDiv">
+        <h1>Create your Dashboard Account</h1>
+        <div class="registerForm">
+            <div class="errorMessageDiv"><p class="errormsg"></p></div>
+            <label>Name :</label>
+            <input type="text" class="form-control lastName" placeholder="Last Name" />
+            <input type="text" class="form-control firstName" placeholder="First Name" />
+            <label>User Name :</label>
+            <input type="text" class="form-control username" placeholder="User name" />
+            <label>Password :</label>
+            <input type="password" class="form-control password" placeholder="Password" />
+            <input type="password" class="form-control password2" placeholder="Confirm Password" />
+            <label>Email :</label>
+            <input type="email" class="form-control email" placeholder="Email" />
+            <label>Phone Number :</label>
+            <input type="tel" class="form-control phonenumber" placeholder="Phone Number" />
+            <label>Gender</label>
+            <select class="form-control gender">
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+            </select>
+            <label>Security Question 1 :</label>
+            <select class="form-control question1">
+                <option>Q1</option>
+                <option>Q2</option>
+                <option>Q3</option>
+                <option>Q4</option>
+                <option>Q5</option>
+            </select>
+            <input type="text" class="form-control answer1" placeholder="Answer for Security Question 1" />
+            <label>Security Question 2 :</label>
+            <select class="form-control question2">
+                <option>Q1</option>
+                <option>Q2</option>
+                <option>Q3</option>
+                <option>Q4</option>
+                <option>Q5</option>
+            </select>
+            <input type="text" class="form-control answer2" placeholder="Answer for Security Question 2" />
+            <label>Security Question 3 :</label>
+            <select class="form-control question3">
+                <option>Q1</option>
+                <option>Q2</option>
+                <option>Q3</option>
+                <option>Q4</option>
+                <option>Q5</option>
+            </select>
+            <input type="text" class="form-control answer3" placeholder="Answer for Security Question 3" />
+            <label>Are you human ?</label>
+            <div class="captcha">
+                <img src="images/images.png" class="captchaImg" />
+                <input type="text" class="form-control" placeholder="Text from Image" />
+            </div>
+            <div class="formButtons">
+                <input type="button" class="btn btn-primary registerAction createAccount" value="Create Account" />
+                <input type="button" class="btn btn-warning registerAction resetFields" value="Reset" />
+                <a href="../index.html" class="btn btn-danger registerAction">Cancel</a>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
