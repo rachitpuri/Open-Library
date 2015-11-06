@@ -22,10 +22,10 @@ public class AdministratorDAO {
 		sessionFactory= config.buildSessionFactory();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Administrator> getAllAdmin() throws Exception{
 		Session session = sessionFactory.openSession();
 		Query q = session.createQuery("from User u");
-		//List<User> users = q.list();
 		return q.list();
 	}
 	
@@ -36,6 +36,7 @@ public class AdministratorDAO {
 		Query q = session.createQuery(queryString);
 		q.setString("username", username);
 		q.setString("password", password);
+		@SuppressWarnings("unchecked")
 		List<Administrator> admin = (List<Administrator>) q.list();
 		System.out.println("query executed");
 		if(admin.size() > 0)

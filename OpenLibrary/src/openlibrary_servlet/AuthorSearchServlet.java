@@ -16,7 +16,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 
 import DTO.Author;
-import DTO.Book;
 
 public class AuthorSearchServlet extends HttpServlet{
 	/**
@@ -24,11 +23,10 @@ public class AuthorSearchServlet extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
-		System.out.println("In BookSearchServlet!");
 		
 		if(req.getParameter("authorSearch") != null){
 			String authorSearchString = "%" + req.getParameter("searchString") + "%";
@@ -44,16 +42,10 @@ public class AuthorSearchServlet extends HttpServlet{
 			
 			List<Author> searchedAuthor = new ArrayList<Author>();
 			searchedAuthor = (List<Author>) q.list();
-			
-			//PrintWriter writer = resp.getWriter();
-			//writer.println("In Book Search servlet");
-			
 			HttpSession session = req.getSession();
 			session.setAttribute("searchedAuthor", searchedAuthor);
 			req.getRequestDispatcher("AuthorSearch.jsp").forward(req, resp);
 			session.invalidate();
-		}
-		
+		}		
 	}
-
 }

@@ -10,13 +10,11 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
 import org.hibernate.cfg.AnnotationConfiguration;
-import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.w3c.dom.CharacterData;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -86,9 +84,6 @@ public class ParseDAO {
 		ArrayList<Book> bookList = new ArrayList<Book>();
 		
 		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-		//builderFactory.setIgnoringComments(true);
-		//builderFactory.setIgnoringElementContentWhitespace(true);
-		//builderFactory.setValidating(true);
 		
 		DocumentBuilder dBuilder = builderFactory.newDocumentBuilder();
 		
@@ -167,12 +162,9 @@ public class ParseDAO {
 			Element description = (Element) descBook.getElementsByTagName("description").item(0);
 			book.setDescription(getCharacterDataFromElement(description));
 			
-			bookList.add(book);
-			
+			bookList.add(book);			
 		}
-		
 		return bookList;
-		
 	}
 	
 	public static String getCharacterDataFromElement(Element e) {
@@ -195,6 +187,7 @@ public class ParseDAO {
 		Session session = parseDAO.factory.openSession();
 		
 		Query q = session.createQuery("select b from BookISBN b where b.isbn <> ''");
+		@SuppressWarnings("unchecked")
 		List<BookISBN> bookWorklist = (List<BookISBN>) q.list();
 		
 		for(BookISBN book : bookWorklist){
@@ -205,24 +198,16 @@ public class ParseDAO {
 			if(bookExistsQuery.list().isEmpty()){
 
 				String url = "https://www.goodreads.com/search/index.xml?key=sxPgEQPamAedZHfbZZXbSA&q="+book.getIsbn();
-				
 				parseDAO.getAndSetResponse(url);
-				
 				StringBuffer response = parseDAO.getResponse();
-				
 				ArrayList<Book> bookList = parseDAO.parseResponseAndGetBookList(response);
-				
 				session.beginTransaction();
-				
 				for(Book b : bookList){
 					session.save(b);
 				}
-				
 				session.getTransaction().commit();
 			}
-			
 		}
-		
 		session.close();	
 		//End of NewPR
 
@@ -258,8 +243,6 @@ public class ParseDAO {
 		
 		session.getTransaction().commit();
 		
-		session.close();*/
-		
+		session.close();*/	
 	}
-
 }

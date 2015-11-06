@@ -1,7 +1,6 @@
 package openlibrary_servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -10,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.mysql.fabric.xmlrpc.base.Data;
 
 import DAO.UserCommentsDAO;
 import DTO.Comment;
@@ -28,7 +25,6 @@ public class UserCommentServlet extends HttpServlet{
 			throws ServletException, IOException {
 		
 		HttpSession session = req.getSession();
-		System.out.println("Entrypoint: UserCommentServlet");
 		
 		if(req.getParameter("commentSubmit") != null){
 			
@@ -40,7 +36,6 @@ public class UserCommentServlet extends HttpServlet{
 			comment.setCommentTimestamp(timestamp);
 			
 			String name = (String) req.getParameter("user");
-			System.out.println("name is "+name);
 			if(name.length() < 1)
 				comment.setUserName("Anonymous");
 			else
@@ -54,16 +49,7 @@ public class UserCommentServlet extends HttpServlet{
 			UserCommentsDAO usercommentsDAO = new UserCommentsDAO();
 			usercommentsDAO.insert(comment, userId, bookId);
 			
-			//PrintWriter writer = resp.getWriter();
-			//writer.println("Book Id:" + bookId + "Comment: " + req.getParameter("comment"));
-			System.out.println("Book Id:" + bookId + "Comment: " + req.getParameter("comment"));
-			
-			req.getRequestDispatcher("BookDetails.jsp?bid=" + bookId).forward(req, resp);
-			
+			req.getRequestDispatcher("BookDetails.jsp?bid=" + bookId).forward(req, resp);			
 		}
-		
 	}
-	
-	
-
 }

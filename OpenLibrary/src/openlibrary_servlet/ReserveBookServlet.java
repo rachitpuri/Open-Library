@@ -1,7 +1,6 @@
 package openlibrary_servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import DAO.ReservationDAO;
-import DAO.UserDAO;
 import DTO.Book;
 import DTO.User;
 
@@ -25,7 +23,6 @@ public class ReserveBookServlet extends HttpServlet{
 			throws ServletException, IOException {
 		
 		HttpSession session = req.getSession();
-		System.out.println("Entrypoint: ReserveBookServlet");
 		
 		User loggedInUser = (User) session.getAttribute("loggedInUser");
 		Book selectedBook = (Book) session.getAttribute("selectedBook");
@@ -38,14 +35,7 @@ public class ReserveBookServlet extends HttpServlet{
 		} else
 			bookReservedMessage = "You already have a reservation for this book.";
 		
-		System.out.println(bookReservedMessage);
 		req.setAttribute("bookReservedMessage", bookReservedMessage);
 		req.getRequestDispatcher("BookDetails.jsp?bid=" + selectedBook.getBookId()).forward(req, resp);
-		
-		//PrintWriter writer = resp.getWriter();
-		//writer.println("Book Reserved!");
 	}
-	
-	
-
 }

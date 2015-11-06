@@ -1,12 +1,9 @@
 package DTO;
 
-import java.util.Date;
-
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
+@SuppressWarnings("serial")
 @Embeddable
 public class ReservationId implements java.io.Serializable{
 	

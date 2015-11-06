@@ -1,10 +1,7 @@
 package DAO;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import javassist.bytecode.Descriptor.Iterator;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -14,7 +11,6 @@ import org.hibernate.cfg.AnnotationConfiguration;
 import DTO.Author;
 import DTO.Book;
 import DTO.BookISBN;
-import DTO.User;
 
 public class BookDAO {
 
@@ -31,11 +27,6 @@ public class BookDAO {
 		//Session session = HibernateUtil.getSessionFactory().openSession();
 		session1.getTransaction().begin();
 		String query;
-		//String searchbook = "%" + bookid + "%";
-		//String updatedcopies = "%" + newcopies + "%";
-		System.out.println("BookID :" +bookid );
-		System.out.println("newdata :" +newdata);
-		System.out.println("option is :" +option);
 		if(option.matches("update_price"))
 			query = "update Book b set b.price = :price where b.bookId = :bookid";
 		else
@@ -50,9 +41,6 @@ public class BookDAO {
 		
 		q.executeUpdate();
 		session1.getTransaction().commit();
-		//session1.beginTransaction();
-		//session1.saveOrUpdate(book);
-		//session1.getTransaction().commit();
 		session1.close();
 		System.out.println("DB copies updated");
 	}
@@ -61,7 +49,6 @@ public class BookDAO {
 	public List<Book> getAllAdminBooks(String bookSearched) throws Exception{
 		Session session1 = sessionFactory.openSession();
 		Query q = null;
-		//String searchbook = "%" + bookSearched + "%";
 		if(bookSearched.isEmpty()){
 			System.out.println("No search string");
 			q = session1.createQuery("select b from Book b");
@@ -75,10 +62,10 @@ public class BookDAO {
 		return books;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<BookISBN> getAllBooks(String bookSearched) throws Exception{
 		Session session1 = sessionFactory.openSession();
 		Query q = null;
-		//String searchbook = "%" + bookSearched + "%";
 		if(bookSearched.isEmpty())
 			q = session1.createQuery("select b from BookISBN b");
 		else{
@@ -93,7 +80,6 @@ public class BookDAO {
 	public Book getBook(int bookid) throws Exception{
 		Session session1 = sessionFactory.openSession();
 		Query q = null;
-		//String searchbook = "%" + bookSearched + "%";
 		q = session1.createQuery("select b from Book b where b.id = :id");
 		q.setString("id", "" +bookid);
 		Book book = new Book();
@@ -101,12 +87,12 @@ public class BookDAO {
 		return book;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Author> getBooksAuthors (List<Book> books) throws Exception{
 		Session session1 = sessionFactory.openSession();
 		List<Author> authors = new ArrayList<Author>();
 		List<Integer> authorIds = new ArrayList<Integer>();
 		Query q = null;
-		//String searchbook = "%" + bookSearched + "%";
 		if(books.isEmpty()){
 			authors = null;
 			authorIds = null;
@@ -123,25 +109,20 @@ public class BookDAO {
 		return authors;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Author> getCompleteAuthorsList(String author) throws Exception{
 		Session session1 = sessionFactory.openSession();
 		Query q = null;
-		//String searchbook = "%" + bookSearched + "%";
-		//if(author.isEmpty())
-			q = session1.createQuery("select a from Author a");
-		//else{
-		//	q = session1.createQuery("select a from Author a where a.name like :searchstring");
-		//	q.setString("searchstring", "%" + author + "%");
-		//}
+		q = session1.createQuery("select a from Author a");
 		List<Author> authors = new ArrayList<Author>();
 		authors = (List<Author>) q.list();	
 		return authors;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Author> getAllAuthors(String author) throws Exception{
 		Session session1 = sessionFactory.openSession();
 		Query q = null;
-		//String searchbook = "%" + bookSearched + "%";
 		if(author.isEmpty())
 			q = session1.createQuery("select a from Author a");
 		else{

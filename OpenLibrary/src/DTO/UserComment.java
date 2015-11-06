@@ -1,6 +1,5 @@
 package DTO;
 
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -13,11 +12,7 @@ public class UserComment {
 	
 	private int book;
 	
-	//@EmbeddedId
-	//private UserBookComment userBook;
-	
 	private int comment;
-
 	
 	public int getUser() {
 		return user;
@@ -43,15 +38,4 @@ public class UserComment {
 	public void setComment(int comment) {
 		this.comment = comment;
 	}
-	/*
-	public UserBookComment getUserBook() {
-		return userBook;
-	}
-
-	public void setUserBook(UserBookComment userBook) {
-		this.userBook = userBook;
-	}
-	*/
-	
-
 }

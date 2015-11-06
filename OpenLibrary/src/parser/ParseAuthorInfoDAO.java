@@ -16,19 +16,12 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
-import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
 import org.xml.sax.InputSource;
 import org.w3c.dom.CharacterData;
-
-
-
-
-
 
 import DTO.Author;
 import DTO.BookISBN;
@@ -43,9 +36,6 @@ public class ParseAuthorInfoDAO {
 	public ParseAuthorInfoDAO(){
 		AnnotationConfiguration config = new AnnotationConfiguration();
 		config.configure("hibernate.cfg.xml");
-		
-		//new SchemaExport(config).create(true, true);
-		
 		sessionFactory = config.buildSessionFactory();
 	}
 	
@@ -68,10 +58,6 @@ public class ParseAuthorInfoDAO {
 			//add request header
 			con.setRequestProperty("User-Agent", USER_AGENT);
 	 
-			int responseCode = con.getResponseCode();
-			System.out.println("\nSending 'GET' request to URL : " + url);
-			System.out.println("Response Code : " + responseCode);
-	 
 			BufferedReader in = new BufferedReader(
 			        new InputStreamReader(con.getInputStream()));
 			String inputLine;
@@ -83,7 +69,6 @@ public class ParseAuthorInfoDAO {
 			in.close();
 			
 			setResponse(response);
-			
 		}
 	
 	public Author parseResponse(StringBuffer response) throws Exception{
@@ -207,11 +192,10 @@ public class ParseAuthorInfoDAO {
 		Session session = authorDAO.sessionFactory.openSession();
 		Query q = session.createQuery("select distinct b.authorId from Book b");
 		
+		@SuppressWarnings("unchecked")
 		List<Integer> authorIds = (List<Integer>) q.list();
 		for (int authorId : authorIds){
 			String authorURL = "https://www.goodreads.com/author/show/" + authorId +".xml?key=sxPgEQPamAedZHfbZZXbSA";
-			//System.out.println(authorURL);
-			
 			authorDAO.getAndSetResponse(authorURL);
 			
 			StringBuffer response = authorDAO.getResponse();
@@ -220,36 +204,7 @@ public class ParseAuthorInfoDAO {
 			session.beginTransaction();
 			session.save(author);
 			session.getTransaction().commit();
-		}
-		
+		}	
 		session.close();
-
-		
-		/*
-		 * Single author...Richard Bach
-		String authorURL = "https://www.goodreads.com/author/show/16904.xml?key=sxPgEQPamAedZHfbZZXbSA";
-		
-		ParseAuthorInfoDAO authorDAO = new ParseAuthorInfoDAO();
-		authorDAO.getAndSetResponse(authorURL);
-		
-		StringBuffer response = authorDAO.getResponse();
-		
-		Author author = authorDAO.parseResponse(response);
-		System.out.println(author.getAbout());
-		
-		AnnotationConfiguration config = new AnnotationConfiguration();
-		config.configure("hibernate.cfg.xml");
-		
-		//new SchemaExport(config).create(true, true);
-		
-		SessionFactory factory = config.buildSessionFactory();
-		Session session = factory.openSession(); //getCurrentSession()
-		session.beginTransaction();
-		session.save(author);
-		session.getTransaction().commit();
-		session.close();
-		*/
-		
 	}
-
 }

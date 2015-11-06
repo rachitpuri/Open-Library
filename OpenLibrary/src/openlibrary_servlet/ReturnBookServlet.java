@@ -1,7 +1,6 @@
 package openlibrary_servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +24,6 @@ public class ReturnBookServlet extends HttpServlet{
 			throws ServletException, IOException {
 		
 		HttpSession session = req.getSession();
-		System.out.println("Entrypoint: ReturnBookServlet");
 		
 		if(req.getParameterValues("checkedBooks") != null){
 			String[] checkedBooks = req.getParameterValues("checkedBooks");
@@ -38,12 +36,7 @@ public class ReturnBookServlet extends HttpServlet{
 			User loggedInUser = (User) session.getAttribute("loggedInUser");
 			IssueReturnBookDAO returnBooks = new IssueReturnBookDAO();
 			returnBooks.returnBooks(loggedInUser, checkedBookIds);
-			
-			System.out.println("The selected books have been returned");
-			
 			req.getRequestDispatcher("UserHome.jsp").forward(req, resp);
 		}
-		
 	}	
-
 }

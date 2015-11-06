@@ -1,7 +1,6 @@
 package openlibrary_servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,27 +17,22 @@ import org.hibernate.cfg.AnnotationConfiguration;
 
 import DTO.Book;
 
-
-
 public class BookSearchServlet extends HttpServlet{
 	/**
 	 * Default Serial Version UID
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
-		System.out.println("In BookSearchServlet!");
 		
 		if(req.getParameter("bookSearch") != null){
 			String bookSearchString = "%" + req.getParameter("searchString") + "%";
 			
 			AnnotationConfiguration config1 = new AnnotationConfiguration();
 			config1.configure("hibernate.cfg.xml");
-
-			//new SchemaExport(config).create(true, true);
 
 			SessionFactory sessionFactory = config1.buildSessionFactory();
 			Session session1 = sessionFactory.openSession();
@@ -49,17 +43,10 @@ public class BookSearchServlet extends HttpServlet{
 			List<Book> searchedBooks = new ArrayList<Book>();
 			searchedBooks = (List<Book>) q.list();
 			
-			//PrintWriter writer = resp.getWriter();
-			//writer.println("In Book Search servlet");
-			
 			HttpSession session = req.getSession();
 			session.setAttribute("searchedBooks", searchedBooks);
 			req.getRequestDispatcher("BookSearch.jsp").forward(req, resp);
 			session.invalidate();
 		}
-		
-
 	}
-	
-
 }

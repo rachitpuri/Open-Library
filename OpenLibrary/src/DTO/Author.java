@@ -2,18 +2,12 @@ package DTO;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.w3c.dom.Text;
 
 @Entity
 @Table(name="Author")
@@ -142,7 +136,4 @@ public class Author {
 	public void setDiedAt(String diedAt) {
 		this.diedAt = diedAt;
 	}
-	
-	
-
 }

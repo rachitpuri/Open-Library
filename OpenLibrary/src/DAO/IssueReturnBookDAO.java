@@ -69,13 +69,11 @@ SessionFactory sessionFactory;
 		
 		session.beginTransaction();
 		session.save(userBookIssue);
-		//session.getTransaction().commit();
 		
 		Query q = session.createQuery("select b from Book b where b.bookId = :bookId");
 		q.setParameter("bookId", book.getBookId());
 		Book updateBook = (Book) q.list().get(0);
 		
-		//session.beginTransaction();
 		updateBook.setBookCount(updateBook.getBookCount() - 1);
 		session.update(updateBook);
 		session.getTransaction().commit();
@@ -88,6 +86,7 @@ SessionFactory sessionFactory;
 		Session session = sessionFactory.openSession();
 		Query q = session.createQuery("select ub from UserBookIssue ub where ub.userBookIssueId.user = :user and ub.returnDate is null");
 		q.setParameter("user", user);
+		@SuppressWarnings("unchecked")
 		List<UserBookIssue> userBooks = (List<UserBookIssue>) q.list();
 		return userBooks;
 	}
@@ -97,12 +96,14 @@ SessionFactory sessionFactory;
 		
 		Query q1 = session.createQuery("select b from Book b where b.bookId in (:bookList)");
 		q1.setParameterList("bookList", bookIds);
+		@SuppressWarnings("unchecked")
 		List<Book> selectedBooks = (List<Book>) q1.list();
 		
 		Query q2 = session.createQuery("select ub from UserBookIssue ub "
 									+ "where ub.userBookIssueId.user = :user and ub.userBookIssueId.book in (:bookList)");
 		q2.setParameter("user", user);
 		q2.setParameterList("bookList", selectedBooks);
+		@SuppressWarnings("unchecked")
 		List<UserBookIssue> booksToReturn = (List<UserBookIssue>) q2.list();
 		
 		session.beginTransaction();
@@ -110,9 +111,7 @@ SessionFactory sessionFactory;
 			b.setBookCount(b.getBookCount() + 1);
 			session.update(b);
 		}
-		//session.getTransaction().commit();
 		
-		//session.beginTransaction();
 		for(UserBookIssue ub : booksToReturn){
 			Date returnDate = new Date();
 			ub.setReturnDate(returnDate);
@@ -130,20 +129,16 @@ SessionFactory sessionFactory;
 				}
 			}
 			ub.setUserBill(userBill);
-			System.out.println(ub.getUserBill());
 			session.update(ub);
 		}
 		session.getTransaction().commit();
 		session.close();
-		
-		System.out.println("Successfully returned");
 		
 		//If a book was in reservation status, then send mail to the users who reserved it
 		for(Book b : selectedBooks){
 			if(b.getBookCount() == 1)
 				getReservationsAndSendMail(b);
 		}
-
 	}
 	
 	public void getReservationsAndSendMail(Book book){
@@ -154,7 +149,6 @@ SessionFactory sessionFactory;
 			for(User user : reservationUsers){
 				System.out.println("Sending mail to " + user.getEmail() + "...");
 				sendMail(user, book);
-				//reservationDAO.toggleReservationStatus(user, book);
 			}
 		}
 		
@@ -190,8 +184,7 @@ SessionFactory sessionFactory;
 	    										}
 	    							);  
 
-		   //session.setDebug(true); 
-		    try{
+	    try{
 		   Transport transport = session.getTransport("smtps");  
 		   InternetAddress addressFrom = new InternetAddress(user);  
 
@@ -209,15 +202,16 @@ SessionFactory sessionFactory;
 		   transport.connect();  
 		   Transport.send(message);  
 		   transport.close();
-		    } catch(Exception e){
-		    	
-		    }
+	    } catch(Exception e){
+	    	e.printStackTrace();
+	    }
 	}
 	
 	public List<UserBookIssue> getUserIssueHistory(User user){
 		Session session = sessionFactory.openSession();
 		Query q = session.createQuery("select ub from UserBookIssue ub where ub.userBookIssueId.user = :user and ub.returnDate is not null");
 		q.setParameter("user", user);
+		@SuppressWarnings("unchecked")
 		List<UserBookIssue> userBooks = (List<UserBookIssue>) q.list();
 		return userBooks;
 	}

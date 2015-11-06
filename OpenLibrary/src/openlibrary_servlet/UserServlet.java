@@ -1,7 +1,6 @@
 package openlibrary_servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Properties;
@@ -15,7 +14,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import DAO.UserDAO;
 import DTO.User;
@@ -30,13 +28,7 @@ public class UserServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException{
 		
-		HttpSession session1 = req.getSession();
-		
-		System.out.println("Entry point: UserServlet");
-		
 		if(req.getParameter("signUpSubmit") != null){
-			System.out.println("Call from signup.jsp");
-			
 			UserDAO userDAO = new UserDAO();
 			List<User> allUsers = null;
 		    try {
@@ -63,28 +55,22 @@ public class UserServlet extends HttpServlet{
 		    		req.getRequestDispatcher("signup.jsp?message=" +URLEncoder.encode(message, "UTF-8")).forward(req, resp);
 		    		break;
 		    	}
-		    }
-		    
+		    }    
 		    if(!userExists){
-		    	User newUser = new User();
-		    	
+		    	User newUser = new User();	
 		    	newUser.setUsername(username);
 		    	newUser.setPassword(password);
 		    	newUser.setFirstName(firstName);
 		    	newUser.setLastName(lastName);
 		    	newUser.setGender(gender);
 		    	newUser.setEmail(email);
-		    	
 		    	userDAO.insert(newUser);
 		    	
-sendMail(newUser);
+		    	sendMail(newUser);
 		    	req.setAttribute("message", "Account created. Please login with your credentials.");
-		    	System.out.println("User added");
 		    	req.getRequestDispatcher("login.jsp").forward(req, resp);
 		    }
-			
 		}
-		
 	}
 	
 	public void sendMail(User mailUser){  
@@ -117,33 +103,29 @@ sendMail(newUser);
 	    										}
 	    							);  
 
-	   //session.setDebug(true); 
 	   try{
-	   Transport transport = session.getTransport();  
-	   InternetAddress addressFrom = new InternetAddress(user);  
-
-	   MimeMessage message = new MimeMessage(session);  
-	   message.setSender(addressFrom);  
-	   String msg = "Dear " + mailUser.getFirstName()
-			   		+ ",\n\n" 
-			   		+ "Your account has been created in the system."
-			   		+ "\n\n "
-			   		+ "We look forward for you to explore the world of books, enjoy reviewing them and borrow the books you want to read. "
-			   		+ "\n\n"
-			   		+ "Regards,"
-			   		+ "Open Library Team";
-	   message.setSubject("Welcome to the Open Library family!");  
-	   message.setContent(msg, "text/plain");  
-	   message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));  
-
-	   transport.connect();  
-	   Transport.send(message);  
-	   transport.close();
+		   Transport transport = session.getTransport();  
+		   InternetAddress addressFrom = new InternetAddress(user);  
+	
+		   MimeMessage message = new MimeMessage(session);  
+		   message.setSender(addressFrom);  
+		   String msg = "Dear " + mailUser.getFirstName()
+				   		+ ",\n\n" 
+				   		+ "Your account has been created in the system."
+				   		+ "\n\n "
+				   		+ "We look forward for you to explore the world of books, enjoy reviewing them and borrow the books you want to read. "
+				   		+ "\n\n"
+				   		+ "Regards,"
+				   		+ "Open Library Team";
+		   message.setSubject("Welcome to the Open Library family!");  
+		   message.setContent(msg, "text/plain");  
+		   message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));  
+	
+		   transport.connect();  
+		   Transport.send(message);  
+		   transport.close();
 	   } catch(Exception e){
-	    	System.out.println(e.getMessage());
-	    	
+	    	e.printStackTrace();	    	
 	   }
 	}
-	
-
 }

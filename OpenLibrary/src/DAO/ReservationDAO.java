@@ -61,6 +61,7 @@ public class ReservationDAO {
 		q.setParameter("book", book);
 		q.setParameter("status", 1);
 		
+		@SuppressWarnings("unchecked")
 		List<Reservation> reservations = (List<Reservation>) q.list();
 		List<User> reservationUsers = new ArrayList<User>();
 		session.beginTransaction();
@@ -76,33 +77,4 @@ public class ReservationDAO {
 		return reservationUsers;
 		
 	}
-	/*
-	public void toggleReservationStatus(User user, Book book){
-		System.out.println("Toggling reservation status");
-		Session session = sessionFactory.openSession();
-		Query q = session.createQuery("select r from Reservation r "
-									+ "where r.reservationId.user = :user "
-									+ "and r.reservationId.book = :book "
-									+ "and r.reservationStatus = :status");
-		q.setParameter("user", user);
-		q.setParameter("book", book);
-		q.setParameter("status", 1);
-		
-		Reservation reservation = (Reservation) q.list().get(0);
-		
-		//System.out.println(reservation.getUser().getId() + ", " + reservation.getBook().getBookId() + ", " + reservation.getReservationStatus());
-		
-		//session.beginTransaction();
-		/*for(Reservation r : reservations){
-			if(r.getReservationStatus() == 1){
-				r.setReservationStatus(0);
-				session.update(r);
-			}
-		}*/
-		//reservation.setReservationStatus(0);
-		//session.update(reservation);
-		//session.getTransaction().commit();
-		//session.close();
-	//}
-
 }
